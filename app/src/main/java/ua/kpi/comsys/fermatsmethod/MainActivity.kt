@@ -14,12 +14,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val button = findViewById<Button>(R.id.calculate)
         val notFoundText = findViewById<TextView>(R.id.not_found)
+        val timeExceededText = findViewById<TextView>(R.id.time_exceeded)
         val divisor1 = findViewById<TextView>(R.id.divisor1)
         val divisor2 = findViewById<TextView>(R.id.divisor2)
         val numberView = findViewById<EditText>(R.id.number)
         notFoundText.isVisible = false
+        timeExceededText.isVisible = false
         button.setOnClickListener {
             notFoundText.isVisible = false
+            timeExceededText.isVisible = false
             divisor1.text = ""
             divisor2.text = ""
             val number = numberView.text.toString()
@@ -27,6 +30,8 @@ class MainActivity : AppCompatActivity() {
                 val result = FermatsMethod(number.toInt())
                 if (result.first == -1) {
                     notFoundText.isVisible = true
+                } else if (result.second == -2) {
+                    timeExceededText.isVisible = true
                 } else {
                     divisor1.text = result.first.toString()
                     divisor2.text = result.second.toString()
@@ -36,10 +41,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun FermatsMethod(number: Int) : Pair<Int, Int> {
+        val startTime = System.currentTimeMillis()
         val initialValue = Math.sqrt(number.toDouble())
         val value = ceil(initialValue)
         var intValue = value.toInt()
         while (intValue != (number + 1) / 2) {
+            val time = System.currentTimeMillis()
+            if (time - startTime > 3000) return Pair(-2, -2)
             val diff = intValue * intValue - number
             val sqrt = isPerfectSquare(diff)
             if (sqrt != -1) {
