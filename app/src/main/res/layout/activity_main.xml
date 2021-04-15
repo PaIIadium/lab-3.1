@@ -49,6 +49,16 @@
         app:layout_constraintTop_toBottomOf="@+id/number"
         app:layout_constraintVertical_bias="0.259" />
 
+    <TextView
+        android:id="@+id/time_exceeded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Перевищено час виконання"
+        android:textColor="#FF0000"
+        app:layout_constraintBottom_toBottomOf="@+id/not_found"
+        app:layout_constraintEnd_toEndOf="@+id/not_found"
+        app:layout_constraintStart_toStartOf="@+id/not_found" />
+
     <Button
         android:id="@+id/calculate"
         android:layout_width="wrap_content"
